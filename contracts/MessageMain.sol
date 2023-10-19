@@ -7,12 +7,21 @@ contract MessageMain {
 
     address mailbox; // address of mailbox contract
 
+    bytes public messages;
+
     constructor(address _mailbox){
         mailbox = _mailbox;
     }
 
+    modifier onlyMailbox(){ 
+        require(msg.sender == mailbox, "Only mailbox can call this function !!!");
+        _;
+    }
+
     // handle function which is called by the mailbox to bridge messages from other chains
-    function handle(uint32 _origin, bytes32 _sender, bytes memory _body) external {
-    bytes32 messageId = keccak256(abi.encodePacked(_origin, _sender, _body));
-    emit MessageReceived(messageId, _origin, _sender, _body);    }
+    function handle(uint32 _origin, bytes32 _sender, bytes memory _body) external onlyMailbox {
+        messages = _body;
+    }
+
+
 }

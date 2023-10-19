@@ -14,10 +14,11 @@ async function main() {
     "0xcc737a94fecaec165abcf12ded095bb13f037685",
     "0x8f9C3888bFC8a5B25AED115A82eCbb788b196d2a",
     "11155111",
-    "0x215465Eec6f8e700a65686cC62e02817Ee0e2728"
+    "0x9D718d236B3e197b4470Ef8dABbF2B15e9c0311C"
   );
 
   const contractAddress = messagerouter.address;
+  console.log(contractAddress)
 
   const contractInfo = { contractName, network, timestamp, contractAddress };
 

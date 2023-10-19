@@ -19,3 +19,7 @@ module.exports = {
     },
   },
 };
+
+// console.log(process.env.SEPOLIA_PROVIDER_URL)
+// console.log(process.env.PRIVATE_KEY)
+// console.log(process.env.MUMBAI_PROVIDER_URL)
