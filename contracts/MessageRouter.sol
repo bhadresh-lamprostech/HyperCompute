@@ -11,7 +11,29 @@ contract MessageRouter {
     uint32 domainId;
     address messageContract;
 
-    constructor(address _mailbox, address _interchainGasPaymaster, uint32 _domainId, address _messageContract) {
+    uint nonce;
+
+    struct contractInfo {
+        address sourceAddress;
+        string sourceFunction;
+    }
+
+    mapping(bytes32 => contractInfo) uuidToContractInfo;
+
+    event dispatchCallCreated(
+        bytes32 uuid,
+        address indexed Executer,
+        bytes callData
+    );
+
+    event CallbackCreated(bytes32 uuid, string sourceFunction, bytes data);
+
+    constructor(
+        address _mailbox,
+        address _interchainGasPaymaster,
+        uint32 _domainId,
+        address _messageContract
+    ) {
         mailbox = _mailbox;
         interchainGasPaymaster = _interchainGasPaymaster;
         domainId = _domainId;
@@ -19,20 +41,39 @@ contract MessageRouter {
     }
 
     // By calling this function you can send a message to other chain
-   function sendMessage(bytes memory _body) payable external {
-        bytes32 messageId = IMailbox(mailbox).dispatch(domainId, addressToBytes32(messageContract), _body);
-        uint256 quoteValue = getGasQuote();
-        IInterchainGasPaymaster(interchainGasPaymaster).payForGas{value: quoteValue}(
-            messageId,
-            domainId,
-            209736,
-            msg.sender
+    function sendMessage(
+        bytes memory _byteCode,
+        bytes calldata _encodedFunctionData
+    ) external payable {
+        bytes32 uuid = keccak256(
+            abi.encodePacked(block.number, msg.data, nonce++)
         );
+        uuidToContractInfo[uuid];
+        bytes memory callData = abi.encode(
+            uuid,
+            _byteCode,
+            _encodedFunctionData,
+            address(this)
+        );
+        bytes32 messageId = IMailbox(mailbox).dispatch(
+            domainId,
+            addressToBytes32(messageContract),
+            callData
+        );
+        uint256 quoteValue = getGasQuote();
+        IInterchainGasPaymaster(interchainGasPaymaster).payForGas{
+            value: quoteValue
+        }(messageId, domainId, 1009736, msg.sender);
+        emit dispatchCallCreated(uuid, msg.sender, callData);
     }
 
     // Function to get the gas quote from the paymaster contract
     function getGasQuote() internal view returns (uint256) {
-        return IInterchainGasPaymaster(interchainGasPaymaster).quoteGasPayment(domainId, 209736);
+        return
+            IInterchainGasPaymaster(interchainGasPaymaster).quoteGasPayment(
+                domainId,
+                1009736
+            );
     }
 
     // Converts address to bytes32

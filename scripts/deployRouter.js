@@ -11,10 +11,10 @@ async function main() {
     "MessageRouter"
   );
   const messagerouter = await MessageRouterFactory.deploy(
-    "0xcc737a94fecaec165abcf12ded095bb13f037685",
+    "0xCC737a94FecaeC165AbCf12dED095BB13F037685",
     "0x8f9C3888bFC8a5B25AED115A82eCbb788b196d2a",
     "11155111",
-    "0x9D718d236B3e197b4470Ef8dABbF2B15e9c0311C"
+    "0x0dA52157B9B3AF14fb95EBe0D07F7FF0006c42F3"
   );
 
   const contractAddress = messagerouter.address;

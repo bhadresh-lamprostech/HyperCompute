@@ -34,5 +34,35 @@
     "network": "mumbai",
     "timestamp": "2023-10-18T09:34:47.623Z",
     "contractAddress": "0x9D718d236B3e197b4470Ef8dABbF2B15e9c0311C"
+  },
+  {
+    "contractName": "MessageMain",
+    "network": "sepolia",
+    "timestamp": "2023-10-19T10:44:48.803Z",
+    "contractAddress": "0xedc4F7C992772dE9D013C46D27969327ED126aEa"
+  },
+  {
+    "contractName": "MessageRouter",
+    "network": "mumbai",
+    "timestamp": "2023-10-19T10:46:44.423Z",
+    "contractAddress": "0x0dA52157B9B3AF14fb95EBe0D07F7FF0006c42F3"
+  },
+  {
+    "contractName": "MessageMain",
+    "network": "sepolia",
+    "timestamp": "2023-10-19T11:10:05.748Z",
+    "contractAddress": "0x0dA52157B9B3AF14fb95EBe0D07F7FF0006c42F3"
+  },
+  {
+    "contractName": "MessageRouter",
+    "network": "mumbai",
+    "timestamp": "2023-10-19T11:10:31.991Z",
+    "contractAddress": "0x898d77A1c80C622e2A40ca3A14a44627FD072D75"
+  },
+  {
+    "contractName": "MessageRouter",
+    "network": "mumbai",
+    "timestamp": "2023-10-19T11:16:59.446Z",
+    "contractAddress": "0x709288Bd107A835c54F7A555BDC5D63115Da86fE"
   }
 ]
