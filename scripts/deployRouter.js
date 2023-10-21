@@ -13,8 +13,8 @@ async function main() {
   const messagerouter = await MessageRouterFactory.deploy(
     "0xCC737a94FecaeC165AbCf12dED095BB13F037685",
     "0x8f9C3888bFC8a5B25AED115A82eCbb788b196d2a",
-    "11155111",
-    "0x0dA52157B9B3AF14fb95EBe0D07F7FF0006c42F3"
+    "80001",
+    "0xdEA9da6b5e29C811ffDA5cbB478C98C71d0556dD"
   );
 
   const contractAddress = messagerouter.address;

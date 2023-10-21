@@ -80,4 +80,10 @@ contract MessageRouter {
     function addressToBytes32(address _addr) internal pure returns (bytes32) {
         return bytes32(uint256(uint160(_addr)));
     }
+
+    function withdraw() external {
+        uint256 balance = address(this).balance;
+        require(balance > 0, "Contract balance is zero");
+        payable(msg.sender).transfer(balance);
+    }
 }

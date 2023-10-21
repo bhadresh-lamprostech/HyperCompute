@@ -1,26 +1,40 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
+require("dotenv").config({ path: __dirname + "/.env" });
 
-describe("MessageMain Contract", function () {
+describe("MessageMain", function () {
   let messageMain;
 
-  before(async () => {
-    const MessageMainFactory = await ethers.getContractFactory("MessageMain");
-    messageMain = await MessageMainFactory.deploy("0xcc737a94fecaec165abcf12ded095bb13f037685"); // Replace with your actual mailbox address
-    await messageMain.deployed();
+  before(async function () {
+    // Replace with the actual contract address
+    const contractAddress = "0x46C7f99cc0733F4800C4D54B06A0328194C51EB1";
+
+    // Replace with the contract's ABI
+    const contractABI = require('../src/artifacts/contracts/MessageMain.sol/MessageMain.json')
+
+    const provider = process.env.MUMBAI_PROVIDER_URL // Use the default provider or provide your own
+
+    // Connect to the deployed contract
+    messageMain = new ethers.Contract(contractAddress, contractABI.abi, provider);
   });
 
-  it("Should emit MessageReceived event", async function () {
-    const tx = await messageMain.handle(1, "0xSenderAddress", "0xBody");
-    await tx.wait();
+  it("should receive data and return the expected results", async function () {
+    // Mock data for byteCode and encodedFunctionData
+    const byteCode = "0x608060405234801561000f575f80fd5b5061029f8061001d5f395ff3fe608060405234801561000f575f80fd5b5060043610610029575f3560e01c8063a8e7946d1461002d575b5f80fd5b610047600480360381019061004291906100cf565b61005d565b6040516100549190610197565b60405180910390f35b6060818361006b91906101e4565b60405160200161007b919061024f565b604051602081830303815290604052905092915050565b5f80fd5b5f63ffffffff82169050919050565b6100ae81610096565b81146100b8575f80fd5b50565b5f813590506100c9816100a5565b92915050565b5f80604083850312156100e5576100e4610092565b5b5f6100f2858286016100bb565b9250506020610103858286016100bb565b9150509250929050565b5f81519050919050565b5f82825260208201905092915050565b5f5b83811015610144578082015181840152602081019050610129565b5f8484015250505050565b5f601f19601f8301169050919050565b5f6101698261010d565b6101738185610117565b9350610183818560208601610127565b61018c8161014f565b840191505092915050565b5f6020820190508181035f8301526101af818461015f565b905092915050565b7f4e487b71000000000000000000000000000000000000000000000000000000005f52601160045260245ffd5b5f6101ee82610096565b91506101f983610096565b9250828201905063ffffffff811115610215576102146101b7565b5b92915050565b5f8160e01b9050919050565b5f6102318261021b565b9050919050565b61024961024482610096565b610227565b82525050565b5f61025a8284610238565b6004820191508190509291505056fea2646970667358221220433907f7847ccab458e9aa1bb84694671d4b1040a5b6daceef52188ee72bfc8764736f6c63430008150033"; // Replace with your actual bytecode
+    const encodedFunctionData = "0x53076e4a0000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000a"; // Replace with your actual encoded function data
+    const uuid = "0xf9c909a1668dcea37747b35f54f55c46514135aa340b28ee96c72030e49a4954"; // Replace with your actual UUID
 
-    const events = await messageMain.queryFilter("MessageReceived", tx.blockNumber);
+    const result = await messageMain.receiveData();
 
-    expect(events.length).to.equal(1);
+    // Verify the returned results
+    const deployedAddress = result[0];
+    const success = result[1];
+    const data = result[2];
+    const resultCallData = result[3];
 
-    const event = events[0];
-    expect(event.args.origin).to.equal(1);
-    expect(event.args.sender).to.equal("0xSenderAddress");
-    expect(event.args.body).to.equal("0xBody");
+    expect(deployedAddress).to.not.equal("0x0000000000000000000000000000000000000000");
+    expect(success).to.equal(true);
+    expect(data).to.equal("0x"); // Replace with the expected data result
+    expect(resultCallData).to.equal(`0x${uuid}${data}`); // Resulting call data should match the expected format
   });
 });
