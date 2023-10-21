@@ -71,28 +71,26 @@ contract MessageMain {
             encodedFunctionData
         );
 
-        bytes memory resultCallData = abi.encode(uuid, data);
-
         messageRouterContract = executeContractAddress;
         _encodedFunctionData = encodedFunctionData;
         _deployedAddress = deployedAddress;
         _data = data;
         _uuid = uuid;
         success = _success;
-        result = resultCallData;
     }
 
-    function sendResult(bytes memory _result) external payable {
+    function sendResult() external payable {
+        bytes memory resultCallData = abi.encode(_uuid, _data);
         bytes32 messageId = IMailbox(receiverMailbox).dispatch(
             receiverDomainId,
             addressToBytes32(messageRouterContract),
-            _result
+            resultCallData
         );
         uint256 quoteValue = getGasQuote();
         IInterchainGasPaymaster(receiverInterchainGasPaymaster).payForGas{
             value: quoteValue
         }(messageId, receiverDomainId, 1009736, msg.sender);
-        emit dispatchCallCreated(msg.sender, _result);
+        emit dispatchCallCreated(msg.sender, resultCallData);
     }
 
     // Function to get the gas quote from the paymaster contract

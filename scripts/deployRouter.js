@@ -15,7 +15,7 @@ async function main() {
     "0xCC737a94FecaeC165AbCf12dED095BB13F037685",
     "0x8f9C3888bFC8a5B25AED115A82eCbb788b196d2a",
     "80001",
-    "0x49aeB4Acc22CCA835D94ff2001Da5Bd6298Fd7BB"
+    "0x115623B326c7952940F7cF871e521006c630ff85"
   );
 
   const contractAddress = messagerouter.address;

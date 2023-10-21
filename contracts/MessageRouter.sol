@@ -108,10 +108,7 @@ contract MessageRouter {
         bytes32 _sender,
         bytes memory _result
     ) external onlyMailbox {
-        (bytes32 uuid, bytes memory data) = abi.decode(
-            _result,
-            (bytes32, bytes)
-        );
+        (bytes32 uuid, bytes memory data) = abi.decode(_result,(bytes32, bytes));
         _uuid = uuid;
         _data = data;
     }

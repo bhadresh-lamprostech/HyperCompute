@@ -10,5 +10,17 @@
     "network": "sepolia",
     "timestamp": "2023-10-21T10:09:30.088Z",
     "contractAddress": "0x90F581c1bEa9A3724e3fF1a88494D6f8ea208C46"
+  },
+  {
+    "contractName": "MessageMain",
+    "network": "mumbai",
+    "timestamp": "2023-10-21T10:42:25.614Z",
+    "contractAddress": "0x115623B326c7952940F7cF871e521006c630ff85"
+  },
+  {
+    "contractName": "MessageRouter",
+    "network": "sepolia",
+    "timestamp": "2023-10-21T10:42:57.535Z",
+    "contractAddress": "0xF84658D28f2f0BFB5d9EA6b135bb2A381718Cb69"
   }
 ]
