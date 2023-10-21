@@ -9,7 +9,10 @@ async function main() {
   const contractName = "MessageMain";
   const MessageMainFactory = await hre.ethers.getContractFactory('MessageMain');
   const messagemain = await MessageMainFactory.deploy(
-    "0xCC737a94FecaeC165AbCf12dED095BB13F037685"
+    "0xCC737a94FecaeC165AbCf12dED095BB13F037685",
+    "0xCC737a94FecaeC165AbCf12dED095BB13F037685",
+    "0x8f9C3888bFC8a5B25AED115A82eCbb788b196d2a",
+    "11155111",
   );
 
   const contractAddress = messagemain.address;
